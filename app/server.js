@@ -1,9 +1,12 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const contactRoutes = require("./routes/contactRoutes");
-const errorHandler = require("./middleware/errorHandler");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js"; // Ensure file extension is `.js`
+import contactRoutes from "./routes/contactRoutes.js";
+import errorHandler from "./middleware/errorHandler.js";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 

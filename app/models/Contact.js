@@ -1,12 +1,15 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const contactSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  phoneNumber: String,
-  budget: String,
-  message: String,
-}, { timestamps: true });  // ⬅️ This automatically adds 'createdAt' & 'updatedAt'
+const contactSchema = new mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    phoneNumber: String,
+    budget: String,
+    message: String,
+  },
+  { timestamps: true } // Adds `createdAt` & `updatedAt` fields automatically
+);
 
 const Contact = mongoose.model("Contact", contactSchema);
-module.exports = Contact;
+export default Contact;

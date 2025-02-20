@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ReactNode } from "react"; // ✅ Import ReactNode for type safety
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,21 +17,15 @@ export const metadata = {
   title: "Merhaj Portfolio",
   description: "Welcome to my personal portfolio website.",
   icons: {
-    icon: "/favicon.ico"
+    icon: "/favicon.ico",
   },
 };
 
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+// ✅ Explicitly define the type for children
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
