@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 
 const timelineEvents = [
   { year: 2018, title: "Started Learning Programming", description: "Began my journey with Python and Java, focusing on logic building and problem-solving.", details: "Developed small projects like a basic calculator and a to-do list application, setting the foundation for my programming career." },
@@ -16,8 +16,6 @@ const timelineEvents = [
 export default function Timeline() {
   const [expandedEvent, setExpandedEvent] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] })
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
   return (
     <section ref={containerRef} className="py-20 bg-background overflow-hidden">

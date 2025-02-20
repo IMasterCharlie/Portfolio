@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { MoonIcon, SunIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false); // State for mobile menu
 
   useEffect(() => setMounted(true), []);
@@ -24,8 +23,8 @@ export default function Header() {
   const navLinks = [
     { id: "portfolioGrid", label: "Work" },
     { id: "wearYourStory", label: "About" },
-    { id: "services", label: "Services" }, // Added Services
-    { id: "testimonials", label: "Testimonials" }, // Added Testimonials
+    { id: "services", label: "Services" },
+    { id: "testimonials", label: "Testimonials" },
     { id: "experience", label: "Experience" },
     { id: "contact", label: "Contact" },
   ];
@@ -38,11 +37,10 @@ export default function Header() {
       transition={{ duration: 0.6 }}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-        
         {/* Logo */}
         <div className="flex lg:flex-1">
           <button onClick={() => scrollToSection("hero")} className="-m-1.5 p-1.5">
-            <img className="h-12 w-auto rounded-full" src="/Mehraj_Logo.png" alt="Mehraj Logo" />
+            <Image src="/Mehraj_Logo.png" alt="Mehraj Logo" width={48} height={48} className="rounded-full" />
           </button>
         </div>
 

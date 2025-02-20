@@ -11,6 +11,8 @@ export const submitContactForm = async (req, res) => {
       data: newContact, // ✅ Returns saved data including timestamp
     });
   } catch (error) {
+    console.error("Error saving data:", error);
     res.status(500).json({ error: "Error saving data" });
   }
+  
 };

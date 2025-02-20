@@ -3,14 +3,6 @@
 import { motion } from "framer-motion"
 
 export default function WearYourStory() {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = element.offsetTop;
-      window.scrollTo({ top: offset, behavior: "smooth" });
-    }
-  };
-
   return (
     <section className="bg-background pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

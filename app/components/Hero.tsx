@@ -16,12 +16,12 @@ export default function Hero() {
     <div className="relative isolate overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl px-6 py-20 flex flex-col justify-around items-center text-center lg:flex-row-reverse lg:items-center lg:gap-x-10 lg:px-8 lg:text-left">
         
-        {/* Image Section - Appears First on Mobile, Right on Large Screens */}
+        {/* Image Section - Slides from Left to Right */}
         <motion.div
           className="flex justify-center lg:justify-end"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={{ x: 100, opacity: 0 }} // Starts off-screen to the left
+          animate={{ x: 0, opacity: 1 }} // Moves to its normal position
+          transition={{ duration: 1, ease: "easeOut" }} // Smooth transition
         >
           <Image
             src="/Mehraj_Portfolio.jpg"
