@@ -1,25 +1,41 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
+const API_BASE_URL = "https://portfolio-cpc1.onrender.com"; // Replace with your actual Render backend URL
+
+// Define the schema using Zod
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  phoneNumber: z.string().min(10, { message: "Please enter a valid phone number." }),
+  phoneNumber: z
+    .string()
+    .min(10, { message: "Please enter a valid phone number." }),
   budget: z.string().min(1, { message: "Please enter your budget." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
-})
+});
+
+// Define TypeScript type for submissionStatus
+type SubmissionStatus = { success: boolean; message: string } | null;
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,32 +46,41 @@ export default function ContactForm() {
       budget: "",
       message: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
+    setSubmissionStatus(null); // Reset status on new submission
+
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-  
+
       if (response.ok) {
         form.reset();
-        alert("Thank you for your message. We'll get back to you soon!");
+        setSubmissionStatus({ success: true, message: "Thank you! We will get back to you soon." });
       } else {
-        alert("Error submitting the form. Please try again.");
+        const errorData = await response.json();
+        setSubmissionStatus({
+          success: false,
+          message: errorData?.message || "Failed to submit the form.",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
+      setSubmissionStatus({
+        success: false,
+        message: "Something went wrong. Please try again later.",
+      });
     }
+
     setIsSubmitting(false);
   }
-  
 
   return (
     <section className="bg-background py-20">
@@ -66,9 +91,12 @@ export default function ContactForm() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl mb-4">Get in Touch</h2>
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl mb-4">
+            Get in Touch
+          </h2>
           <p className="text-lg text-muted-foreground">
-            We would love to hear from you. Fill out the form below and we will get back to you as soon as possible.
+            We would love to hear from you. Fill out the form below and we will
+            get back to you as soon as possible.
           </p>
         </motion.div>
         <motion.div
@@ -137,12 +165,28 @@ export default function ContactForm() {
                   <FormItem>
                     <FormLabel>Message</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Tell us about your project..." className="min-h-[120px]" {...field} />
+                      <Textarea
+                        placeholder="Tell us about your project..."
+                        className="min-h-[120px]"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Submission Message */}
+              {submissionStatus && (
+                <p
+                  className={`text-center text-sm ${
+                    submissionStatus.success ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {submissionStatus.message}
+                </p>
+              )}
+
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
@@ -151,5 +195,5 @@ export default function ContactForm() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

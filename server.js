@@ -8,17 +8,19 @@ dotenv.config();
 
 // MongoDB Connection
 const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
+    if (mongoose.connection.readyState >= 1) {
+      console.log("Already connected to MongoDB");
+      return;
+    }
+    try {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log(" MongoDB Connected");
+    } catch (error) {
+      console.error(" MongoDB Connection Error:", error);
+      process.exit(1);
+    }
+  };
+  
 
 // Define Mongoose Schema & Model
 const contactSchema = new mongoose.Schema(
@@ -65,4 +67,4 @@ app.use((err, req, res, next) => {
 
 // Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(` Server running on port ${PORT}`));
