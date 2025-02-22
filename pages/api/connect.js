@@ -1,4 +1,4 @@
-import connectDB from "@/config/db";
+import connectDB from "@/app/config/db";
 
 export default async function handler(req, res) {
   await connectDB();
