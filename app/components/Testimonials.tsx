@@ -78,7 +78,7 @@ export default function Testimonials() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
+              <p className="text-gray-700 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
               <div className="flex items-center">
                 <Image
                   src={testimonial.image || "/placeholder.svg"}
