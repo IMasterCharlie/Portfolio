@@ -7,8 +7,8 @@ import { useInView } from "react-intersection-observer";
 export default function Marquee() {
   const controls = useAnimation();
   const { ref, inView } = useInView({
-    triggerOnce: true, // Animation triggers only once
-    threshold: 0.2, // Triggers when 20% of the component is visible
+    triggerOnce: true,
+    threshold: 0.2,
   });
 
   useEffect(() => {
@@ -21,8 +21,13 @@ export default function Marquee() {
     <motion.div
       ref={ref}
       className="relative w-full overflow-hidden bg-background py-16"
-      initial={{ y: 100, opacity: 0 }} // Initially hidden below
-      animate={controls} // Controlled animation
+      style={{
+        willChange: "transform",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
+      initial={{ y: 100, opacity: 0 }}
+      animate={controls}
       transition={{ duration: 1, ease: "easeOut" }}
     >
       {/* Gradient overlay */}
@@ -31,15 +36,20 @@ export default function Marquee() {
       {/* Marquee Animation */}
       <motion.div
         className="flex whitespace-nowrap"
-        animate={{ x: ["0%", "-50%"] }}
+        style={{
+          willChange: "transform",
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
+        }}
+        animate={{ transform: ["translateX(0%)", "translateX(-50%)"] }}
         transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
       >
-        {[...Array(4)].map((_, index) => (
+        {[...Array(3)].map((_, index) => (
           <div key={index} className="flex items-center mx-4">
             <span
-              className="text-7xl sm:text-8xl md:text-9xl font-bold text-transparent px-4"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-transparent px-4"
               style={{
-                WebkitTextStroke: "3px rgb(0 0 0)", // Tailwind gray-400
+                WebkitTextStroke: "3px rgb(0 0 0)",
               }}
             >
               Mohammed Mehraj

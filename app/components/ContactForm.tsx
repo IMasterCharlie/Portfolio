@@ -17,20 +17,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const API_BASE_URL = "https://portfolio-cpc1.onrender.com"; // Replace with your actual Render backend URL
+const API_BASE_URL = "https://portfolio-cpc1.onrender.com";
 
-// Define the schema using Zod
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  phoneNumber: z
-    .string()
-    .min(10, { message: "Please enter a valid phone number." }),
+  phoneNumber: z.string().min(10, { message: "Please enter a valid phone number." }),
   budget: z.string().min(1, { message: "Please enter your budget." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
-// Define TypeScript type for submissionStatus
 type SubmissionStatus = { success: boolean; message: string } | null;
 
 export default function ContactForm() {
@@ -50,20 +46,21 @@ export default function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    setSubmissionStatus(null); // Reset status on new submission
+    setSubmissionStatus(null);
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
 
       if (response.ok) {
         form.reset();
-        setSubmissionStatus({ success: true, message: "Thank you! We will get back to you soon." });
+        setSubmissionStatus({
+          success: true,
+          message: "Thank you! We’ll get back to you soon.",
+        });
       } else {
         const errorData = await response.json();
         setSubmissionStatus({
@@ -83,89 +80,111 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="bg-background py-20">
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="bg-white py-20"
+    >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl mb-4">
+          <h2
+            id="contact-heading"
+            className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4"
+          >
             Get in Touch
           </h2>
-          <p className="text-lg text-muted-foreground">
-            We would love to hear from you. Fill out the form below and we will
-            get back to you as soon as possible.
+          <p className="text-lg text-gray-600">
+            Have a project in mind or just want to say hello? Fill out the form below and we’ll be in touch.
           </p>
-        </motion.div>
+        </motion.header>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
+          role="form"
         >
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6"
+              aria-label="Contact form"
+            >
+              {/* Name */}
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel htmlFor="name">Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input id="name" placeholder="John Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel htmlFor="email">Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@example.com" {...field} />
+                      <Input id="email" type="email" placeholder="john@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Phone */}
               <FormField
                 control={form.control}
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel htmlFor="phone">Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (555) 000-0000" {...field} />
+                      <Input id="phone" placeholder="+1 (555) 000-0000" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Budget */}
               <FormField
                 control={form.control}
                 name="budget"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Budget</FormLabel>
+                    <FormLabel htmlFor="budget">Budget</FormLabel>
                     <FormControl>
-                      <Input placeholder="$1,000 - $5,000" {...field} />
+                      <Input id="budget" placeholder="$1,000 - $5,000" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Message */}
               <FormField
                 control={form.control}
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel htmlFor="message">Message</FormLabel>
                     <FormControl>
                       <Textarea
+                        id="message"
                         placeholder="Tell us about your project..."
                         className="min-h-[120px]"
                         {...field}
@@ -187,7 +206,13 @@ export default function ContactForm() {
                 </p>
               )}
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting}
+                aria-disabled={isSubmitting}
+              >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>

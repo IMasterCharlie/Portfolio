@@ -59,7 +59,7 @@ export default function PortfolioGrid() {
 
   return (
     <motion.section
-      className="py-20 bg-gray-900"
+      className="py-20 bg-white"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -73,8 +73,8 @@ export default function PortfolioGrid() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-black text-white">My Work</h2>
-          <p className="mt-4 text-lg text-gray-400">
+          <h2 className="text-5xl font-black text-gray-900">My Work</h2>
+          <p className="mt-4 text-lg text-gray-700">
             A showcase of our minimalist designs and creative solutions.
           </p>
         </motion.div>
@@ -84,10 +84,10 @@ export default function PortfolioGrid() {
             <button
               key={category}
               onClick={() => setFilter(category)}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full text-sm font-medium border transition-all duration-300 ${
                 filter === category
-                  ? "bg-indigo-600 text-white shadow-lg"
-                  : "bg-gray-800 text-gray-400 hover:bg-indigo-500 hover:text-white"
+                  ? "bg-black text-white border-black shadow-md"
+                  : "text-gray-700 border-gray-300 hover:bg-gray-100 hover:text-black"
               }`}
             >
               {category}
@@ -105,21 +105,21 @@ export default function PortfolioGrid() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl"
               >
-                <div className="relative h-64">
+                <div className="relative h-64 overflow-hidden">
                   <Image
                     src={project.imageUrl || "/placeholder.svg"}
                     alt={project.title}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-t-2xl"
+                    className="rounded-t-2xl grayscale hover:grayscale-0 transition duration-500 ease-in-out"
                   />
                 </div>
                 <div className="p-6">
-                  <div className="text-sm font-medium text-indigo-400 mb-2">{project.category}</div>
-                  <h3 className="text-2xl font-semibold text-white mb-4">{project.title}</h3>
-                  <p className="text-gray-400">{project.description}</p>
+                  <div className="text-sm font-medium text-gray-800 mb-2">{project.category}</div>
+                  <h3 className="text-2xl font-semibold text-black mb-4">{project.title}</h3>
+                  <p className="text-gray-600">{project.description}</p>
                 </div>
               </motion.div>
             ))}

@@ -48,12 +48,10 @@ const testimonials = [
   },
 ];
 
-
-
 export default function Testimonials() {
   return (
     <motion.section
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-white"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -61,7 +59,7 @@ export default function Testimonials() {
     >
       <div className="container mx-auto">
         <motion.h2
-          className="text-5xl font-black mb-16 text-center text-white"
+          className="text-5xl font-black mb-16 text-center text-gray-900"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -69,17 +67,18 @@ export default function Testimonials() {
         >
           What Our Clients Say
         </motion.h2>
+
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.author}
-              className="bg-gray-800 p-6 rounded-lg"
+              className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <p className="text-gray-300 mb-4">&quot;{testimonial.quote}&quot;</p>
+              <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
               <div className="flex items-center">
                 <Image
                   src={testimonial.image || "/placeholder.svg"}
@@ -89,8 +88,8 @@ export default function Testimonials() {
                   className="rounded-full mr-4"
                 />
                 <div>
-                  <p className="font-bold text-white">{testimonial.author}</p>
-                  <p className="text-gray-400">{testimonial.position}</p>
+                  <p className="font-bold text-gray-900">{testimonial.author}</p>
+                  <p className="text-gray-500">{testimonial.position}</p>
                 </div>
               </div>
             </motion.div>
