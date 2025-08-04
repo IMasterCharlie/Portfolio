@@ -4,14 +4,32 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const timelineEvents = [
-  { year: 2018, title: "Started Learning Programming", description: "Began my journey with Python and Java, focusing on logic building and problem-solving.", details: "Developed small projects like a basic calculator and a to-do list application, setting the foundation for my programming career." },
-  { year: 2019, title: "Built My First Web Application", description: "Developed a personal portfolio website using HTML, CSS, and JavaScript.", details: "Experimented with responsive design and animations, showcasing my skills and projects to the world." },
-  { year: 2020, title: "Internship as a Frontend Developer", description: "Worked at a startup, enhancing UI/UX and developing reusable React components.", details: "Collaborated with backend developers to integrate APIs, improving the overall user experience of the company's dashboard." },
-  { year: 2021, title: "Freelance Projects & Backend Learning", description: "Started working as a freelancer while learning Node.js and databases.", details: "Developed e-commerce websites and personal blogs for clients, gaining experience in both frontend and backend development." },
-  { year: 2022, title: "Joined Tech Solutions Inc. as a Full Stack Developer", description: "Built scalable web applications using the MERN stack.", details: "Led the development of an internal tool for employee management, improving efficiency by 40%." },
-  { year: 2023, title: "Senior Developer at InnovateX", description: "Promoted to a senior role, mentoring junior developers and optimizing backend performance.", details: "Designed and implemented a microservices architecture for a fintech platform, ensuring better scalability and security." },
-  { year: 2024, title: "Developed AI-Powered Web Applications", description: "Created intelligent web apps integrating AI for real-time user analytics.", details: "Developed an AI-driven chatbot for a customer support system, reducing human intervention by 60% and enhancing user engagement." }
+  {
+    year: 2018,
+    title: "Introduction to Web Development",
+    description: "Began exploring the fundamentals of computers and programming.",
+    details: "Started building a foundation in front-end development using HTML, CSS, and JavaScript."
+  },
+  {
+    year: 2020,
+    title: "Diploma in Electrical and Electronics Engineering",
+    description: "Pursued diploma studies at Mahaveer Institute of Science and Technology.",
+    details: "Gained strong technical knowledge in electronics, while maintaining a growing interest in web and software development."
+  },
+  {
+    year: 2023,
+    title: "Focused Web Development Practice",
+    description: "Dedicated time to learning modern web technologies and building real-world projects.",
+    details: "Practiced full-stack development with hands-on projects, focusing on UI/UX, JavaScript, and responsive design."
+  },
+  {
+    year: 2024,
+    title: "B.Tech in Computer Science and Engineering",
+    description: "Started B.Tech at MLR Institute of Technology.",
+    details: "Currently enhancing skills in full-stack development, contributing to academic and personal projects, and staying updated with the latest trends in software technology."
+  }
 ];
+
 
 export default function Timeline() {
   const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
